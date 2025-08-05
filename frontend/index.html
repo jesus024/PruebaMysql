@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Comunitaria "Lecturas Libres"</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-book-open me-2"></i>
+                Biblioteca Comunitaria "Lecturas Libres"
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#prestamos">Préstamos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#estadisticas">Estadísticas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section text-center py-5">
+        <div class="container">
+            <h1 class="display-4 mb-4">Sistema de Gestión de Préstamos</h1>
+            <p class="lead mb-4">Gestiona los préstamos de la biblioteca de manera eficiente y organizada</p>
+            <button class="btn btn-primary btn-lg" onclick="cargarPrestamos()">
+                <i class="fas fa-list me-2"></i>Ver Préstamos
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <!-- Préstamos Section -->
+        <section id="prestamos" class="mb-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3><i class="fas fa-book me-2"></i>Gestión de Préstamos</h3>
+                            <button class="btn btn-success" onclick="mostrarFormularioPrestamo()">
+                                <i class="fas fa-plus me-2"></i>Nuevo Préstamo
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="buscarPrestamo" placeholder="Buscar préstamos...">
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select" id="filtroEstado">
+                                        <option value="">Todos los estados</option>
+                                        <option value="activo">Activo</option>
+                                        <option value="entregado">Entregado</option>
+                                        <option value="retrasado">Retrasado</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary" onclick="cargarPrestamos()">
+                                        <i class="fas fa-search me-2"></i>Buscar
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="prestamosList" class="table-responsive">
+                                <!-- Los préstamos se cargarán aquí -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estadísticas Section -->
+        <section id="estadisticas" class="mb-5">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><i class="fas fa-chart-bar me-2"></i>Libros Más Prestados</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="librosMasPrestados">
+                                <!-- Estadísticas se cargarán aquí -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><i class="fas fa-exclamation-triangle me-2"></i>Usuarios con Retrasos</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="usuariosConRetrasos">
+                                <!-- Usuarios con retrasos se cargarán aquí -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para Nuevo/Editar Préstamo -->
+    <div class="modal fade" id="prestamoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Nuevo Préstamo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="prestamoForm">
+                        <div class="mb-3">
+                            <label for="usuario_id" class="form-label">Usuario</label>
+                            <select class="form-select" id="usuario_id" required>
+                                <option value="">Seleccionar usuario...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="isbn" class="form-label">Libro (ISBN)</label>
+                            <select class="form-select" id="isbn" required>
+                                <option value="">Seleccionar libro...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha_prestamo" class="form-label">Fecha de Préstamo</label>
+                            <input type="date" class="form-control" id="fecha_prestamo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha_devolucion" class="form-label">Fecha de Devolución</label>
+                            <input type="date" class="form-control" id="fecha_devolucion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select class="form-select" id="estado" required>
+                                <option value="activo">Activo</option>
+                                <option value="entregado">Entregado</option>
+                                <option value="retrasado">Retrasado</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarPrestamo()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

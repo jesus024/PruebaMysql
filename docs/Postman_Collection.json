@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "biblioteca-comunitaria-api",
+		"name": "Biblioteca Comunitaria API",
+		"description": "Colección completa para probar la API de Biblioteca Comunitaria 'Lecturas Libres'",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Información General",
+			"item": [
+				{
+					"name": "GET - Información de la API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Préstamos - CRUD",
+			"item": [
+				{
+					"name": "GET - Listar todos los préstamos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/prestamos",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos"]
+						}
+					}
+				},
+				{
+					"name": "GET - Obtener préstamo por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/prestamos/1",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos", "1"]
+						}
+					}
+				},
+				{
+					"name": "POST - Crear nuevo préstamo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuario_id\": 1,\n  \"isbn\": \"978-0-13-079650-9\",\n  \"fecha_prestamo\": \"2025-01-15\",\n  \"fecha_devolucion\": \"2025-02-15\",\n  \"estado\": \"activo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/prestamos",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos"]
+						}
+					}
+				},
+				{
+					"name": "PUT - Actualizar préstamo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fecha_devolucion\": \"2025-02-20\",\n  \"estado\": \"entregado\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/prestamos/1",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos", "1"]
+						}
+					}
+				},
+				{
+					"name": "DELETE - Eliminar préstamo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/prestamos/1",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Endpoints Especiales",
+			"item": [
+				{
+					"name": "GET - Préstamos de un usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/prestamos/usuario/1",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos", "usuario", "1"]
+						}
+					}
+				},
+				{
+					"name": "GET - Préstamos activos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/prestamos/activos",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos", "activos"]
+						}
+					}
+				},
+				{
+					"name": "GET - Historial de un libro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/prestamos/historial/978-0-13-079650-9",
+							"host": ["{{base_url}}"],
+							"path": ["prestamos", "historial", "978-0-13-079650-9"]
+						}
+					}
+				},
+				{
+					"name": "GET - Libros más prestados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/libros/mas-prestados",
+							"host": ["{{base_url}}"],
+							"path": ["libros", "mas-prestados"]
+						}
+					}
+				},
+				{
+					"name": "GET - Usuarios con retrasos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/usuarios/con-retrasos",
+							"host": ["{{base_url}}"],
+							"path": ["usuarios", "con-retrasos"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+} 
